@@ -59,6 +59,7 @@ public class importData
 
             // print the total amount of data entries
             System.out.println("Total data entries: " + data.size());
+            displayApp.display(data);
          }
 
         catch (IOException e)
@@ -66,6 +67,7 @@ public class importData
              System.out.println("Error reading from file");
              throw new RuntimeException(file);
          }
+
 
     }
 }
