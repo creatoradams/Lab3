@@ -1,46 +1,59 @@
-import java.awt.*;
-import java.util.Collections;
-import java.util.List;
 import javax.swing.*;
-import java.util.ArrayList;
-public class statsPanel extends JPanel
-{
-    public statsPanel(List<InflationCollection> data)
-    {
+import java.awt.*;
+import java.util.List;
+
+public class statsPanel extends JPanel {
+
+    // Keep references to labels so we can update them later
+    private JLabel minLabel;
+    private JLabel maxLabel;
+    private JLabel averageLabel;
+    private JLabel totalLabel;
+
+    public statsPanel(List<InflationCollection> data) {
         setLayout(new GridLayout(4, 1));
 
-        double min = Double.MAX_VALUE; //put max value, so when min is encountered it overwrites
-        double max = Double.MIN_VALUE; // put min value, so when max is encountered it overwrites
-        double total = 0.0;
+        // Initialize labels
+        minLabel = new JLabel();
+        maxLabel = new JLabel();
+        averageLabel = new JLabel();
+        totalLabel = new JLabel();
 
-        for (InflationCollection collection : data)
-        {
-            double rate = collection.getInflationRate();
-
-            // store new minimum in min
-            if (rate < min)
-                min = rate;
-
-            // store new max in max
-            if (rate > max)
-                max = rate;
-            total += rate; // add all inflation values to one sum
-
-        }
-        // check if the list has elements, returns the average unless list returns zero elements
-        double average = data.isEmpty() ? 0.0 : total / data.size(); // get the average inflation
-
-        // create labels for results
-        JLabel minLabel = new JLabel("Minimum Inflation Rate: " + String.format("%.2f", min));
-        JLabel maxLabel = new JLabel("Maximum Inflation Rate: " + String.format("%.2f", max));
-        JLabel averageLabel = new JLabel("Average Inflation Rate: " + String.format("%.2f", average));
-        JLabel totalLabel = new JLabel("Total Inflation Rate: " + String.format("%.2f", total));
-
-        // add to panel
+        // Add them to the panel
         add(minLabel);
         add(maxLabel);
         add(averageLabel);
         add(totalLabel);
+
+        // Calculate initial stats
+        updateStats(data);
     }
 
+    public void updateStats(List<InflationCollection> newData) {
+        if (newData == null || newData.isEmpty()) {
+            minLabel.setText("Minimum Inflation Rate: N/A");
+            maxLabel.setText("Maximum Inflation Rate: N/A");
+            averageLabel.setText("Average Inflation Rate: N/A");
+            totalLabel.setText("Total Inflation Rate: N/A");
+            return;
+        }
+
+        double min = Double.MAX_VALUE;
+        double max = Double.MIN_VALUE;
+        double total = 0.0;
+
+        for (InflationCollection ic : newData) {
+            double rate = ic.getInflationRate();
+            if (rate < min) min = rate;
+            if (rate > max) max = rate;
+            total += rate;
+        }
+        double average = total / newData.size();
+
+        // Round to 2 decimals using String.format
+        minLabel.setText("Minimum Inflation Rate: " + String.format("%.2f", min));
+        maxLabel.setText("Maximum Inflation Rate: " + String.format("%.2f", max));
+        averageLabel.setText("Average Inflation Rate: " + String.format("%.2f", average));
+        totalLabel.setText("Total Inflation Rate: " + String.format("%.2f", total));
+    }
 }

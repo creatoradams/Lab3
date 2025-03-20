@@ -1,9 +1,7 @@
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
 
 // GUI class to display part 1 of the GUI
 public class TablePanel extends JFrame
@@ -13,6 +11,12 @@ public class TablePanel extends JFrame
     {
         // set frame title
         super("Inflation Data");
+
+        // Create panels
+        statsPanel statsPanel = new statsPanel(data);
+        ChartsPanel chartsPanel = new ChartsPanel(data);
+        DetailsPanel detailsPanel = new DetailsPanel(data, statsPanel, chartsPanel);
+
 
         // colum headers to appear at top of frame
         String[] columnNames = {"Country", "Year", "Inflation Rate"};
@@ -34,13 +38,9 @@ public class TablePanel extends JFrame
         // add a tabbed pane to hold all panels
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        // create panels for other classes
-        JPanel detailPanel = new DetailsPanel(data);
-        JPanel statsPanel = new statsPanel(data);
-        JPanel chartsPanel = new ChartsPanel(data);
 
         // add panels
-        tabbedPane.addTab("DetailData", detailPanel);
+        tabbedPane.addTab("DetailData", detailsPanel);
         tabbedPane.addTab("Stats", statsPanel);
         tabbedPane.addTab("Charts", chartsPanel);
 

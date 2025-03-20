@@ -1,10 +1,10 @@
 import java.awt.*;
 import java.util.*;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JButton;
 
 public class DetailsPanel extends JPanel
@@ -12,15 +12,20 @@ public class DetailsPanel extends JPanel
     private JLabel resultLabel; // used to display results
     private List<InflationCollection> data;
 
-    public DetailsPanel(List<InflationCollection> data)
+    // references to other panels to update them
+    private statsPanel statsPanel;
+    private ChartsPanel chartsPanel;
+
+    public DetailsPanel(List<InflationCollection> data, statsPanel statsPanel, ChartsPanel chartsPanel)
     {
+        this.data = data;
+        this.statsPanel = new statsPanel(data);
+        this.chartsPanel = new ChartsPanel(data);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(300, 300));
 
         // extract different countries from the data
         Set<String> diffCountry = new HashSet<>();
-
-        // loop through the collection data
         for(InflationCollection i : data)
         {
             diffCountry.add(i.getCountry());
@@ -67,10 +72,19 @@ public class DetailsPanel extends JPanel
                 String selectedCountry = Objects.requireNonNull(country.getSelectedItem()).toString();
                 // retrieve the selected year
                 Integer selectedYear = (Integer) year.getSelectedItem();
-                // call getInflation method to get the inflation rate for specific country and year
-                double inflation = getInflation(selectedCountry, selectedYear);
-                // display results
-                resultLabel.setText(selectedCountry + ": " + selectedYear);
+
+                // Filter the data based on the selections
+                List<InflationCollection> filteredData = data.stream()
+                        .filter(i -> i.getCountry().equals(selectedCountry))
+                        .filter(i -> i.getYear() == selectedYear)
+                        .collect(Collectors.toList());
+
+                // update statsPanel with filtered data
+                DetailsPanel.this.statsPanel.updateStats(filteredData);
+
+                // update the chartsPanel with new filters
+                DetailsPanel.this.chartsPanel.setFilters(selectedCountry, selectedYear);
+
             }
         });
 
@@ -82,6 +96,8 @@ public class DetailsPanel extends JPanel
         add(country);
         add(new JLabel("Select Year"));
         add(year);
+        add(button);
+        add(resultLabel);
 
 
     }
