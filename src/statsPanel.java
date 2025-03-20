@@ -7,7 +7,7 @@ public class statsPanel extends JPanel
 {
     public statsPanel(List<InflationCollection> data)
     {
-        setLayout(new BorderLayout());
+        setLayout(new GridLayout(4, 1));
 
         double min = Double.MAX_VALUE; //put max value, so when min is encountered it overwrites
         double max = Double.MIN_VALUE; // put min value, so when max is encountered it overwrites
@@ -25,13 +25,16 @@ public class statsPanel extends JPanel
             if (rate > max)
                 max = rate;
             total += rate; // add all inflation values to one sum
-            double average = total/collection.getInflationRate(); // get the average inflation
+
         }
+        // check if the list has elements, returns the average unless list returns zero elements
+        double average = data.isEmpty() ? 0.0 : total / data.size(); // get the average inflation
+
         // create labels for results
-        JLabel minLabel = new JLabel("Mininmum Inflation Rate: " + min);
-        JLabel maxLabel = new JLabel("Maxinmum Inflation Rate: " + max);
-        JLabel averageLabel = new JLabel("Average Inflation Rate: " + total);
-        JLabel totalLabel = new JLabel("Total Inflation Rate: " + total);
+        JLabel minLabel = new JLabel("Minimum Inflation Rate: " + String.format("%.2f", min));
+        JLabel maxLabel = new JLabel("Maximum Inflation Rate: " + String.format("%.2f", max));
+        JLabel averageLabel = new JLabel("Average Inflation Rate: " + String.format("%.2f", average));
+        JLabel totalLabel = new JLabel("Total Inflation Rate: " + String.format("%.2f", total));
 
         // add to panel
         add(minLabel);
