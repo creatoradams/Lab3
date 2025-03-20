@@ -1,10 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChartsPanel extends JPanel
 {
     private final List<InflationCollection> data;
+    private String selectedCountry = null; // which country to display
+    private Integer selectedYear = null; // which year to display
 
     public ChartsPanel(List<InflationCollection> data)
     {
@@ -12,6 +17,13 @@ public class ChartsPanel extends JPanel
         setPreferredSize(new Dimension(500, 500));
     }
 
+    // method to draw chart based on what year and country is picked
+    public void setFilters(String country, Integer year)
+    {
+        this.selectedCountry = country;
+        this.selectedYear = year;
+        repaint();
+    }
     @Override
     protected void paintComponent(Graphics g)
     {
@@ -27,6 +39,19 @@ public class ChartsPanel extends JPanel
         // Convert the Graphics object to Graphics2D for better control
         Graphics2D g2 = (Graphics2D) g;
 
+        //intelliJ recommended this
+        List<InflationCollection> filteredData = new ArrayList<>();
+        for (InflationCollection datum : data) {
+            if (selectedCountry == null || datum.getCountry().equals(selectedCountry)) {
+                if ((selectedYear == null) || (datum.getYear() == selectedYear)) {
+                    filteredData.add(datum);
+                }
+            }
+        }
+
+        // sort the filtered data by year
+        filteredData.sort(Comparator.comparingDouble(InflationCollection::getYear));
+
         // Determine the min and max for both X (year) and Y (inflation)
         double minX = Double.MAX_VALUE;
         double maxX = Double.MIN_VALUE;
@@ -37,10 +62,14 @@ public class ChartsPanel extends JPanel
         {
             double x = i.getYear();
             double y = i.getInflationRate();
-            if (x < minX) minX = x;
-            if (x > maxX) maxX = x;
-            if (y < minY) minY = y;
-            if (y > maxY) maxY = y;
+            if (x < minX)
+                minX = x;
+            if (x > maxX)
+                maxX = x;
+            if (y < minY)
+                minY = y;
+            if (y > maxY)
+                maxY = y;
         }
 
         // Define some margins for drawing
@@ -56,6 +85,10 @@ public class ChartsPanel extends JPanel
         // Y-axis line
         g2.drawLine(padding, padding, padding, panelHeight - padding);
 
+        // store previous point coordinates
+        int previousX = -1;
+        int previousY = -1;
+
         // Plot each data point
         for (InflationCollection i : data)
         {
@@ -69,6 +102,14 @@ public class ChartsPanel extends JPanel
             // Draw a small oval or rectangle to represent the point
             int pointSize = 6;
             g2.fillOval(xPixel - pointSize/2, yPixel - pointSize/2, pointSize, pointSize);
+
+            // draw a line connecting previous point and next point
+            if(previousX != -1 && previousY != -1)
+            {
+                g2.drawLine(previousX, previousY, xPixel, yPixel);
+            }
+            previousX = xPixel;
+            previousY = yPixel;
         }
 
         // Add axis labels, ticks, or a chart title
