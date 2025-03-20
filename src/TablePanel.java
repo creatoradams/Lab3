@@ -44,9 +44,15 @@ public class TablePanel extends JFrame
         tabbedPane.addTab("Stats", statsPanel);
         tabbedPane.addTab("Charts", chartsPanel);
 
+        // use a JSplitPane to simultaneously use
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, tabbedPane);
+        splitPane.setDividerLocation(200);
+
+        // add the split pane to frame
+        add(splitPane, BorderLayout.CENTER);
 
         // setup frame
-        add(scrollPane, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.EAST);
         add(tabbedPane, BorderLayout.CENTER);
         setSize(800, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
