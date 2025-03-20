@@ -31,10 +31,26 @@ public class TablePanel extends JFrame
         // use scroll pane because lots of rows
         JScrollPane scrollPane = new JScrollPane(table);
 
+        // add a tabbed pane to hold all panels
+        JTabbedPane tabbedPane = new JTabbedPane();
+
+        // create panels for other classes
+        JPanel detailPanel = new DetailsPanel(data);
+        JPanel statsPanel = new statsPanel(data);
+        JPanel chartsPanel = new ChartsPanel(data);
+
+        // add panels
+        tabbedPane.addTab("DetailData", detailPanel);
+        tabbedPane.addTab("Stats", statsPanel);
+        tabbedPane.addTab("Charts", chartsPanel);
+
+
         // setup frame
         add(scrollPane, BorderLayout.CENTER);
+        add(tabbedPane, BorderLayout.CENTER);
         setSize(800, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
     }
 
     // method to launch GUI from importData class

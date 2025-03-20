@@ -1,10 +1,62 @@
 <component name="libraryTable">
   <library name="java">
-    <CLASSES />
-    <JAVADOC />
+    <ANNOTATIONS>
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2" />
+    </JAVADOC>
+    <NATIVE>
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2" />
+    </NATIVE>
     <SOURCES>
-      <root url="file://$USER_HOME$/Downloads/jfreechart-1.5.2/jfreechart-1.5.2/src/main/java" />
-      <root url="file://$USER_HOME$/Downloads/jfreechart-1.5.2/jfreechart-1.5.2/src/test/java" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/data" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/data/time" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/data/time/ohlc" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/data/json" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/data/json/impl" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/data/jdbc" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/data/general" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/data/gantt" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/data/function" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/data/xy" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/data/io" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/data/xml" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/data/resources" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/data/category" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/labels" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/event" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/encoders" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/panel" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/text" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/util" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/ui" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/title" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/axis" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/block" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/editor" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/date" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/needle" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/plot" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/plot/dial" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/servlet" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/entity" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/annotations" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/urls" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/imagemap" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/resources" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/renderer" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/renderer/xy" />
+      <root url="file://$PROJECT_DIR$/src/jfreechart-1.5.2/src/main/java/org/jfree/chart/renderer/category" />
     </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/src/jfreechart-1.5.2" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/src/jfreechart-1.5.2" recursive="false" type="SOURCES" />
   </library>
 </component>

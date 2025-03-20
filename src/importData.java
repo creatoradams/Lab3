@@ -59,7 +59,7 @@ public class importData
 
             // print the total amount of data entries
             System.out.println("Total data entries: " + data.size());
-            displayApp.display(data);
+            TablePanel.display(data);
          }
 
         catch (IOException e)
