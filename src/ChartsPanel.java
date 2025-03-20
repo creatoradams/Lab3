@@ -52,13 +52,20 @@ public class ChartsPanel extends JPanel
         // sort the filtered data by year
         filteredData.sort(Comparator.comparingDouble(InflationCollection::getYear));
 
+        // if no selections, display a message
+        if (filteredData.isEmpty())
+        {
+            g.drawString("No data to display", 10, 20);
+            return;
+        }
+
         // Determine the min and max for both X (year) and Y (inflation)
         double minX = Double.MAX_VALUE;
         double maxX = Double.MIN_VALUE;
         double minY = Double.MAX_VALUE;
         double maxY = Double.MIN_VALUE;
 
-        for (InflationCollection i : data)
+        for (InflationCollection i : filteredData)
         {
             double x = i.getYear();
             double y = i.getInflationRate();
