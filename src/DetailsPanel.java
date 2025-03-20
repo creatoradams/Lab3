@@ -19,8 +19,8 @@ public class DetailsPanel extends JPanel
     public DetailsPanel(List<InflationCollection> data, statsPanel statsPanel, ChartsPanel chartsPanel)
     {
         this.data = data;
-        this.statsPanel = new statsPanel(data);
-        this.chartsPanel = new ChartsPanel(data);
+        this.statsPanel = statsPanel;
+        this.chartsPanel = chartsPanel;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(300, 300));
 
@@ -56,9 +56,10 @@ public class DetailsPanel extends JPanel
         // convert to array
         Integer[] years = allYears.toArray(new Integer[0]);
 
-        // create combobox for all the years
-        JComboBox<Integer> year;
-        year = new JComboBox<>(years);
+        // Create a JList
+        JList<Integer> yearList = new JList<>(years);
+        yearList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        yearList.setVisibleRowCount(5); // Just so you see a few items at once in the GUI
 
         // create a button to show inflation
         JButton button = new JButton("Show Inflation");
@@ -69,34 +70,33 @@ public class DetailsPanel extends JPanel
             public void actionPerformed(ActionEvent e)
             {
                 // retrieve the selected country
-                String selectedCountry = Objects.requireNonNull(country.getSelectedItem()).toString();
+                String selectedCountry = (String) country.getSelectedItem();
                 // retrieve the selected year
-                Integer selectedYear = (Integer) year.getSelectedItem();
+                List<Integer> selectedYears = yearList.getSelectedValuesList();
 
                 // Filter the data based on the selections
                 List<InflationCollection> filteredData = data.stream()
                         .filter(i -> i.getCountry().equals(selectedCountry))
-                        .filter(i -> i.getYear() == selectedYear)
+                        .filter(i -> selectedYears.contains(i.getYear()))
                         .collect(Collectors.toList());
 
                 // update statsPanel with filtered data
-                DetailsPanel.this.statsPanel.updateStats(filteredData);
+                statsPanel.updateStats(filteredData);
 
                 // update the chartsPanel with new filters
-                DetailsPanel.this.chartsPanel.setFilters(selectedCountry, selectedYear);
+                chartsPanel.setFilters(selectedCountry, null);
 
             }
         });
 
-        // label the result
-        resultLabel = new JLabel("Select a country and year to view inflation rate");
 
         // add panel components
         add(new JLabel("Select Country"));
         add(country);
-        add(new JLabel("Select Year"));
-        add(year);
+        add(new JLabel("Select Year (hold shift or ctrl to select multiple)"));
+        add(yearList);
         add(button);
+        resultLabel = new JLabel("Select a country and year to view inflation rate");
         add(resultLabel);
 
 
