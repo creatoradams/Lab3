@@ -1,48 +1,83 @@
+import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-import javax.swing.*;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+
 public class ChartsPanel extends JPanel
 {
-    private List<InflationCollection> data; // will be used to generate the scatter plot
-    JFreeChart scatterPlot;
+    private final List<InflationCollection> data;
 
-    // constructor
     public ChartsPanel(List<InflationCollection> data)
     {
         this.data = data;
         setPreferredSize(new Dimension(500, 500));
+    }
 
-        // create x-y series for the scatterPlot requirements. a series holds x & y data points
-        XYSeries series = new XYSeries("Inflation");
-        // loop through the data
-        for (InflationCollection i : data)
+    @Override
+    protected void paintComponent(Graphics g)
+    {
+        super.paintComponent(g); // Clears the background
+
+        if (data == null || data.isEmpty())
         {
-            series.add(i.getYear(), i.getInflationRate()); // i.getYear = x values & i.getInflationRate = y value
+            // If there's no data, just display a message
+            g.drawString("No data to display", 10, 20);
+            return;
         }
 
-        // create the dataset
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series); // add the series of x and y points to the dataset
+        // Convert the Graphics object to Graphics2D for better control
+        Graphics2D g2 = (Graphics2D) g;
 
-        // build the scatter plot
-           scatterPlot = ChartFactory.createScatterPlot
-                   ("20 Year Inflation", // chart title
-                        "X Axis", // x axis label
-                        "Y Axis", // y axis label
-                        dataset,     // data set
-                        PlotOrientation.VERTICAL,
-                        true,
-                        true,
-                        false
-                  );
-           // create and display chartpanel
-       ChartPanel chartPanel = new ChartPanel(scatterPlot);
-       add(chartPanel);
+        // Determine the min and max for both X (year) and Y (inflation)
+        double minX = Double.MAX_VALUE;
+        double maxX = Double.MIN_VALUE;
+        double minY = Double.MAX_VALUE;
+        double maxY = Double.MIN_VALUE;
+
+        for (InflationCollection i : data)
+        {
+            double x = i.getYear();
+            double y = i.getInflationRate();
+            if (x < minX) minX = x;
+            if (x > maxX) maxX = x;
+            if (y < minY) minY = y;
+            if (y > maxY) maxY = y;
+        }
+
+        // Define some margins for drawing
+        int padding = 40;
+        int panelWidth = getWidth();
+        int panelHeight = getHeight();
+        int chartWidth = panelWidth - 2 * padding;
+        int chartHeight = panelHeight - 2 * padding;
+
+
+        // X-axis line
+        g2.drawLine(padding, panelHeight - padding, panelWidth - padding, panelHeight - padding);
+        // Y-axis line
+        g2.drawLine(padding, padding, padding, panelHeight - padding);
+
+        // Plot each data point
+        for (InflationCollection i : data)
+        {
+            double xValue = i.getYear();
+            double yValue = i.getInflationRate();
+
+            // Convert data value to panel coordinates
+            int xPixel = (int) (padding + (xValue - minX) / (maxX - minX) * chartWidth);
+            int yPixel = (int) ((panelHeight - padding) - (yValue - minY) / (maxY - minY) * chartHeight);
+
+            // Draw a small oval or rectangle to represent the point
+            int pointSize = 6;
+            g2.fillOval(xPixel - pointSize/2, yPixel - pointSize/2, pointSize, pointSize);
+        }
+
+        // Add axis labels, ticks, or a chart title
+        g2.drawString("20 Year Inflation", panelWidth / 2 - 50, padding / 2);
+        // X-axis label
+        g2.drawString("Year", panelWidth / 2, panelHeight - 10);
+        // Y-axis label (rotated)
+        g2.rotate(-Math.PI / 2);
+        g2.drawString("Inflation Rate", -panelHeight / 2, 20);
+        g2.rotate(Math.PI / 2); // rotate back
     }
 }
