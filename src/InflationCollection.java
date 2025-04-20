@@ -1,6 +1,7 @@
 import java.util.List;
 
 // this class holds data from each row of the file
+
 public class InflationCollection
 {
     // where to store data of each row
